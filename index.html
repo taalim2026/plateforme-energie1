@@ -1,9 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plateforme didactique – Travail et énergie</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  line-height: 1.6;
+}
+
+header {
+  background: #003366;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+nav {
+  background: #005599;
+  padding: 12px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+section {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+iframe {
+  border: none;
+  margin-top: 15px;
+}
+
+footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 30px;
+}
+</style>
+
+</head>
+
 <body>
 
-<h1>Plateforme didactique – Travail et énergie</h1>
-<p><b>Niveau :</b> Lycée – Programme marocain</p>
+<header>
+  <h1>Plateforme didactique – Travail et énergie</h1>
+  <p>Physique | Lycée | Programme marocain</p>
+</header>
 
-<section>
+<nav>
+  <a href="#rappels">Rappels</a>
+  <a href="#phet1">Énergie mécanique</a>
+  <a href="#phet2">Énergie thermique</a>
+  <a href="#interne">Énergie interne</a>
+</nav>
+
+<section id="rappels">
 <h2>1. Rappels : Travail et énergie mécanique</h2>
 <p>
 Le travail mécanique est un mode de transfert d’énergie.
@@ -11,7 +81,7 @@ L’énergie mécanique est la somme des énergies cinétique et potentielle.
 </p>
 </section>
 
-<section>
+<section id="phet1">
 <h2>2. Activité interactive : Transformations de l’énergie (PhET)</h2>
 <p><b>Objectif :</b> Observer les transformations de l’énergie sous l’effet d’une action mécanique.</p>
 
@@ -21,7 +91,7 @@ width="100%" height="500">
 </iframe>
 </section>
 
-<section>
+<section id="phet2">
 <h2>3. Activité : Énergie thermique et frottement</h2>
 <p><b>Question :</b> Que devient l’énergie mécanique lors du frottement ?</p>
 
@@ -31,7 +101,7 @@ width="100%" height="500">
 </iframe>
 </section>
 
-<section>
+<section id="interne">
 <h2>4. Vers l’énergie interne</h2>
 <p>
 Lorsqu’un système reçoit un travail mécanique, son énergie interne peut augmenter.
@@ -39,4 +109,9 @@ Cette énergie est liée à l’agitation microscopique des particules.
 </p>
 </section>
 
+<footer>
+<p>Plateforme conçue dans le cadre d’une thèse en didactique de la physique – Maroc</p>
+</footer>
+
 </body>
+</html>

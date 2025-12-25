@@ -2,16 +2,17 @@
 <h2>Déformation d’un objet élastique : arc et flèche</h2>
 
 <p>
-Le travail exercé par l’archer sur l’arc provoque sa déformation et le stockage
-d’énergie interne (énergie élastique), qui sera transférée à la flèche.
+Le travail exercé par l’archer sur la corde provoque la déformation de l’arc.
+Cette déformation modifie les interactions microscopiques entre les particules
+de l’arc et entraîne un stockage d’énergie interne (énergie élastique).
 </p>
 
 <div class="sim">
 
-<canvas id="arcSim" width="600" height="300"></canvas>
+<canvas id="arcSim" width="640" height="300"></canvas>
 
 <label>
-Tension de l’arc (travail appliqué)
+Tension de la corde (travail fourni)
 <input type="range" id="pull" min="0" max="100" value="0">
 </label>
 
@@ -31,64 +32,69 @@ const canvas = document.getElementById("arcSim");
 const ctx = canvas.getContext("2d");
 
 let state = "idle"; // idle | flying | paused
-let arrowX = 280;
+let arrowX = 300;
 let speed = 0;
 let energy = 0;
-let animationId = null;
+let animId = null;
 
+// === DESSIN DE L'ARCHER (À GAUCHE) ===
 function drawArcher(armBack){
   // tête
   ctx.beginPath();
-  ctx.arc(480,70,15,0,Math.PI*2);
+  ctx.arc(100,70,15,0,Math.PI*2);
   ctx.stroke();
 
   // corps
   ctx.beginPath();
-  ctx.moveTo(480,85);
-  ctx.lineTo(480,150);
+  ctx.moveTo(100,85);
+  ctx.lineTo(100,150);
   ctx.stroke();
 
-  // jambe
+  // jambes
   ctx.beginPath();
-  ctx.moveTo(480,150);
-  ctx.lineTo(460,200);
-  ctx.lineTo(500,200);
+  ctx.moveTo(100,150);
+  ctx.lineTo(80,210);
+  ctx.lineTo(120,210);
   ctx.stroke();
 
   // bras avant (tenant l’arc)
   ctx.beginPath();
-  ctx.moveTo(480,100);
-  ctx.lineTo(430,120);
+  ctx.moveTo(100,100);
+  ctx.lineTo(160,120);
   ctx.stroke();
 
   // bras arrière (tirant la corde)
   ctx.beginPath();
-  ctx.moveTo(480,100);
-  ctx.lineTo(430-armBack,120);
+  ctx.moveTo(100,100);
+  ctx.lineTo(160-armBack,120);
   ctx.stroke();
 }
 
+// === DESSIN GLOBAL ===
 function draw(bend){
-  ctx.clearRect(0,0,600,300);
+  ctx.clearRect(0,0,640,300);
 
-  // ARC
+  // ARCHER
+  drawArcher(bend*0.3);
+
+  // ARC (au centre)
   ctx.beginPath();
-  ctx.moveTo(150,40);
-  ctx.quadraticCurveTo(150-bend,150,150,260);
+  ctx.moveTo(260,40);
+  ctx.quadraticCurveTo(260-bend,150,260,260);
   ctx.strokeStyle="brown";
   ctx.lineWidth=5;
   ctx.stroke();
 
   // CORDE
   ctx.beginPath();
-  ctx.moveTo(150,40);
-  ctx.lineTo(150+bend,150);
-  ctx.lineTo(150,260);
+  ctx.moveTo(260,40);
+  ctx.lineTo(260+bend,150);
+  ctx.lineTo(260,260);
   ctx.strokeStyle="black";
   ctx.lineWidth=2;
   ctx.stroke();
 
-  // FLÈCHE
+  // FLÈCHE (à droite)
   ctx.fillStyle="black";
   ctx.fillRect(arrowX,145,80,6);
   ctx.beginPath();
@@ -97,40 +103,40 @@ function draw(bend){
   ctx.lineTo(arrowX+80,151);
   ctx.fill();
 
-  // ARCHER
-  drawArcher(bend*0.3);
-
   // BARRE ÉNERGIE
   ctx.fillStyle="#ddd";
-  ctx.fillRect(380,260,150,15);
+  ctx.fillRect(430,260,160,15);
   ctx.fillStyle="#ff9800";
-  ctx.fillRect(380,260,Math.min(energy,150),15);
-  ctx.strokeRect(380,260,150,15);
+  ctx.fillRect(430,260,Math.min(energy,160),15);
+  ctx.strokeRect(430,260,160,15);
   ctx.fillStyle="black";
-  ctx.fillText("Énergie interne (arc)",380,255);
+  ctx.fillText("Énergie interne (arc)",430,255);
 }
 
+// === ÉTAT AU REPOS ===
 function updateIdle(){
   const p = pull.value;
-  const bend = p * 0.6;
+  const bend = p * 0.7;
   energy = 0.02 * p * p;
   document.getElementById("Earc").innerText = energy.toFixed(1);
-  arrowX = 150 + bend + 60;
+  arrowX = 260 + bend + 60;
   draw(bend);
 }
 
-pull.addEventListener("input", () => {
+pull.addEventListener("input", ()=>{
   if(state === "idle") updateIdle();
 });
 
-document.getElementById("shootBtn").onclick = () => {
+// === TIR ===
+document.getElementById("shootBtn").onclick = ()=>{
   if(state !== "idle") return;
   state = "flying";
-  speed = pull.value / 5;
+  speed = pull.value / 4;
   animate();
 };
 
-document.getElementById("pauseBtn").onclick = () => {
+// === PAUSE ===
+document.getElementById("pauseBtn").onclick = ()=>{
   if(state === "flying"){
     state = "paused";
   } else if(state === "paused"){
@@ -139,35 +145,37 @@ document.getElementById("pauseBtn").onclick = () => {
   }
 };
 
-document.getElementById("resetBtn").onclick = () => {
-  cancelAnimationFrame(animationId);
+// === RESET ===
+document.getElementById("resetBtn").onclick = ()=>{
+  cancelAnimationFrame(animId);
   state = "idle";
   pull.value = 0;
   energy = 0;
   document.getElementById("Earc").innerText = "0";
-  arrowX = 280;
+  arrowX = 300;
   updateIdle();
 };
 
+// === ANIMATION ===
 function animate(){
   if(state !== "flying") return;
 
   arrowX += speed;
   draw(0);
 
-  if(arrowX < 600){
-    animationId = requestAnimationFrame(animate);
+  if(arrowX < 640){
+    animId = requestAnimationFrame(animate);
   } else {
     state = "idle";
   }
 }
 
-// Initialisation
+// INITIALISATION
 updateIdle();
 </script>
 
 <div class="box">
-L’archer fournit un travail mécanique en tirant la corde.
+L’archer fournit un travail mécanique en tirant la corde vers lui.
 Ce travail est stocké dans l’arc sous forme d’énergie interne élastique,
 puis transféré à la flèche sous forme d’énergie cinétique.
 </div>

@@ -2,6 +2,157 @@
 <h2>Déformation d’un objet élastique : arc et flèche</h2>
 
 <p>
+Le travail exercé sur l’arc provoque sa déformation et le stockage
+d’énergie interne (énergie élastique), qui peut être restituée à la flèche.
+</p>
+
+<div class="sim">
+
+<canvas id="arcSim" width="520" height="260"></canvas>
+
+<label>
+Tension de l’arc (travail appliqué)
+<input type="range" id="pull" min="0" max="100" value="0" oninput="updateArc()">
+</label>
+
+<p>
+Énergie interne stockée :
+<b><span id="Earc">0</span> J</b>
+</p>
+
+<button onclick="shoot()">▶ Tirer</button>
+<button onclick="pause()">⏸ Pause / Reprendre</button>
+<button onclick="resetSim()">🔁 Recommencer</button>
+
+</div>
+
+<script>
+const canvas = document.getElementById("arcSim");
+const ctx = canvas.getContext("2d");
+
+let arrowX = 240;
+let flying = false;
+let paused = false;
+let interval = null;
+
+// particules microscopiques de l’arc
+let particles = [];
+for(let i=0;i<12;i++){
+  particles.push({x:120+i*8, y:130});
+}
+
+function drawArc(bend, showArrow=true){
+  ctx.clearRect(0,0,520,260);
+
+  // ARC
+  ctx.beginPath();
+  ctx.moveTo(120,30);
+  ctx.quadraticCurveTo(120-bend,130,120,230);
+  ctx.strokeStyle="brown";
+  ctx.lineWidth=5;
+  ctx.stroke();
+
+  // CORDE
+  ctx.beginPath();
+  ctx.moveTo(120,30);
+  ctx.lineTo(120+bend,130);
+  ctx.lineTo(120,230);
+  ctx.strokeStyle="black";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  // PARTICULES MICRO
+  ctx.fillStyle="#1e88e5";
+  particles.forEach((pt,i)=>{
+    ctx.beginPath();
+    ctx.arc(pt.x - bend*0.15, pt.y + Math.sin(i)*4, 4, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // BARRE ÉNERGIE
+  ctx.fillStyle="#ddd";
+  ctx.fillRect(360,200,120,15);
+  ctx.fillStyle="#ff9800";
+  ctx.fillRect(360,200,Math.min(energy,120),15);
+  ctx.strokeRect(360,200,120,15);
+  ctx.fillStyle="black";
+  ctx.fillText("Énergie interne",360,195);
+
+  // FLÈCHE
+  if(showArrow){
+    ctx.fillStyle="black";
+    ctx.fillRect(arrowX,125,70,6);
+    ctx.beginPath();
+    ctx.moveTo(arrowX+70,125);
+    ctx.lineTo(arrowX+85,128);
+    ctx.lineTo(arrowX+70,131);
+    ctx.fill();
+  }
+}
+
+let energy = 0;
+
+function updateArc(){
+  if(flying) return;
+
+  let p = pull.value;
+  let bend = p*0.6;
+  energy = 0.02*p*p;
+  document.getElementById("Earc").innerText = energy.toFixed(1);
+  arrowX = 120 + bend + 60;
+
+  drawArc(bend,true);
+}
+
+updateArc();
+
+function shoot(){
+  if(flying) return;
+  flying = true;
+  paused = false;
+
+  let speed = pull.value/5;
+  let bend = pull.value*0.6;
+
+  interval = setInterval(()=>{
+    if(paused) return;
+
+    arrowX += speed;
+    drawArc(0,true);
+
+    if(arrowX > 520){
+      clearInterval(interval);
+      flying = false;
+    }
+  },30);
+}
+
+function pause(){
+  paused = !paused;
+}
+
+function resetSim(){
+  clearInterval(interval);
+  flying = false;
+  paused = false;
+  pull.value = 0;
+  energy = 0;
+  arrowX = 240;
+  document.getElementById("Earc").innerText = "0";
+  drawArc(0,true);
+}
+</script>
+
+<div class="box">
+Le travail exercé sur l’arc est stocké sous forme d’énergie interne élastique.
+Lors du tir, cette énergie est transférée à la flèche sous forme d’énergie cinétique.
+</div>
+
+</section>
+<section id="arc">
+<h2>Déformation d’un objet élastique : arc et flèche</h2>
+
+<p>
 Lorsqu’on tend un arc, le travail exercé provoque sa déformation.
 Cette déformation modifie les interactions microscopiques entre les particules
 de l’arc et entraîne une mise en réserve d’énergie interne (énergie élastique).

@@ -4,83 +4,125 @@
 <p>
 Lorsqu’on tend un arc, le travail exercé provoque sa déformation.
 Cette déformation modifie les interactions microscopiques entre les particules
-de l’arc et entraîne une mise en réserve d’énergie interne.
+de l’arc et entraîne une mise en réserve d’énergie interne (énergie élastique).
 </p>
 
 <div class="sim">
-<canvas id="arcSim" width="450" height="200"></canvas>
 
-<label>Tension de l’arc (travail appliqué)
-<input type="range" id="pull" min="0" max="100" value="0" oninput="drawArc()">
+<canvas id="arcSim" width="520" height="260"></canvas>
+
+<label>
+Travail appliqué (tension de l’arc)
+<input type="range" id="pull" min="0" max="100" value="0" oninput="updateArc()">
 </label>
 
-<p>Énergie stockée dans l’arc :
-<b><span id="Earc">0</span> J</b></p>
+<p>
+Énergie interne stockée :
+<b><span id="Earc">0</span> J</b>
+</p>
 
-<button onclick="release()">Relâcher la flèche</button>
+<button onclick="releaseArrow()">Relâcher la flèche</button>
+
 </div>
 
 <script>
-let ctx = document.getElementById("arcSim").getContext("2d");
-let arrowX = 300;
+const canvas = document.getElementById("arcSim");
+const ctx = canvas.getContext("2d");
+
+let arrowX = 260;
 let released = false;
 
-function drawArc(){
-  let p = pull.value;
-  let bend = p/3;
-  let E = 0.02*p*p;   // modèle simple d’énergie élastique
-
-  document.getElementById("Earc").innerText = E.toFixed(1);
-
-  ctx.clearRect(0,0,450,200);
-
-  // Arc
-  ctx.beginPath();
-  ctx.moveTo(100,20);
-  ctx.quadraticCurveTo(100-bend,100,100,180);
-  ctx.strokeStyle="brown";
-  ctx.lineWidth=4;
-  ctx.stroke();
-
-  // Corde
-  ctx.beginPath();
-  ctx.moveTo(100,20);
-  ctx.lineTo(100+bend,100);
-  ctx.lineTo(100,180);
-  ctx.strokeStyle="black";
-  ctx.stroke();
-
-  // Flèche
-  arrowX = 100 + bend + 80;
-  ctx.fillRect(arrowX,95,60,5);
-  ctx.beginPath();
-  ctx.moveTo(arrowX+60,95);
-  ctx.lineTo(arrowX+70,97);
-  ctx.lineTo(arrowX+60,100);
-  ctx.fill();
+// particules microscopiques de l’arc
+let particles = [];
+for(let i=0;i<12;i++){
+  particles.push({x:120+i*8, y:130});
 }
 
-drawArc();
+function updateArc(){
+  if(released) return;
 
-function release(){
-  let interval = setInterval(()=>{
-    arrowX += 8;
-    ctx.clearRect(0,0,450,200);
-    ctx.fillRect(arrowX,95,60,5);
+  const p = pull.value;
+  const bend = p*0.6;
+  const E = 0.02*p*p; // modèle simple d’énergie élastique
+  document.getElementById("Earc").innerText = E.toFixed(1);
+
+  ctx.clearRect(0,0,520,260);
+
+  // ARC (courbure)
+  ctx.beginPath();
+  ctx.moveTo(120,30);
+  ctx.quadraticCurveTo(120-bend,130,120,230);
+  ctx.strokeStyle="brown";
+  ctx.lineWidth=5;
+  ctx.stroke();
+
+  // CORDE
+  ctx.beginPath();
+  ctx.moveTo(120,30);
+  ctx.lineTo(120+bend,130);
+  ctx.lineTo(120,230);
+  ctx.strokeStyle="black";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  // FLÈCHE
+  arrowX = 120 + bend + 60;
+  ctx.fillStyle="black";
+  ctx.fillRect(arrowX,125,70,6);
+  ctx.beginPath();
+  ctx.moveTo(arrowX+70,125);
+  ctx.lineTo(arrowX+85,128);
+  ctx.lineTo(arrowX+70,131);
+  ctx.fill();
+
+  // MODÈLE MICROSCOPIQUE (particules de l’arc)
+  ctx.fillStyle="#1e88e5";
+  particles.forEach((pt,i)=>{
     ctx.beginPath();
-    ctx.moveTo(arrowX+60,95);
-    ctx.lineTo(arrowX+70,97);
-    ctx.lineTo(arrowX+60,100);
+    ctx.arc(pt.x - bend*0.15, pt.y + Math.sin(i)*4, 4, 0, Math.PI*2);
     ctx.fill();
-    if(arrowX > 400) clearInterval(interval);
-  },40);
+  });
+
+  // BARRE D’ÉNERGIE
+  ctx.fillStyle="#ddd";
+  ctx.fillRect(360,200,120,15);
+  ctx.fillStyle="#ff9800";
+  ctx.fillRect(360,200,Math.min(E,120),15);
+  ctx.strokeRect(360,200,120,15);
+  ctx.fillStyle="black";
+  ctx.fillText("Énergie interne",360,195);
+}
+
+updateArc();
+
+function releaseArrow(){
+  if(released) return;
+  released = true;
+
+  let speed = pull.value/4;
+  let interval = setInterval(()=>{
+    ctx.clearRect(0,0,520,260);
+    arrowX += speed;
+
+    // flèche en mouvement
+    ctx.fillRect(arrowX,125,70,6);
+    ctx.beginPath();
+    ctx.moveTo(arrowX+70,125);
+    ctx.lineTo(arrowX+85,128);
+    ctx.lineTo(arrowX+70,131);
+    ctx.fill();
+
+    if(arrowX > 520){
+      clearInterval(interval);
+    }
+  },30);
 }
 </script>
 
 <div class="box">
-La déformation de l’arc correspond à une augmentation de l’énergie interne
-(énergie élastique). Lorsqu’on relâche la corde, cette énergie est transférée
-à la flèche sous forme d’énergie cinétique.
+Le travail exercé sur l’arc est stocké sous forme d’énergie interne (élastique).
+Lors du relâchement, cette énergie est transférée à la flèche sous forme
+d’énergie cinétique.
 </div>
 
 </section>

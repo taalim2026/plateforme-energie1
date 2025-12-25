@@ -1,161 +1,86 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Travail et énergie interne</title>
+<section id="arc">
+<h2>Déformation d’un objet élastique : arc et flèche</h2>
 
-<style>
-body{margin:0;font-family:Arial;background:#f4f6f8;}
-header{background:#003366;color:#fff;padding:20px;text-align:center;}
-.container{display:flex;}
-aside{width:260px;background:#e8eef5;padding:20px;}
-aside a{display:block;margin:10px 0;color:#003366;font-weight:bold;text-decoration:none;}
-main{flex:1;padding:30px;background:#fff;}
-h2{color:#003366;}
-.sim{border:1px solid #ccc;padding:15px;margin-top:15px;}
-canvas{border:1px solid #999;background:#fff;}
-label{display:block;margin-top:10px;}
-.box{background:#eef3f8;padding:15px;border-left:4px solid #003366;margin-top:15px;}
-footer{background:#003366;color:#fff;text-align:center;padding:10px;}
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>Travail et énergie interne</h1>
-<p>1ʳᵉ Bac SM & SP – Modélisation microscopique</p>
-</header>
-
-<div class="container">
-
-<aside>
-<h3>Sommaire</h3>
-<a href="#def">I – Effets du travail</a>
-<a href="#defor">1. Déformation</a>
-<a href="#frot">2. Frottement</a>
-<a href="#etat">3. Changement d’état</a>
-</aside>
-
-<main>
-
-<section id="def">
-<div class="box">
-L’énergie interne U correspond à l’énergie microscopique des particules
-(agitation + interactions).
-</div>
-</section>
-
-<!-- DÉFORMATION -->
-<section id="defor">
-<h2>1. Déformation : interactions microscopiques</h2>
+<p>
+Lorsqu’on tend un arc, le travail exercé provoque sa déformation.
+Cette déformation modifie les interactions microscopiques entre les particules
+de l’arc et entraîne une mise en réserve d’énergie interne.
+</p>
 
 <div class="sim">
-<canvas id="defSim" width="400" height="150"></canvas>
-<label>Travail reçu
-<input type="range" min="0" max="50" value="0" oninput="drawDef(this.value)">
+<canvas id="arcSim" width="450" height="200"></canvas>
+
+<label>Tension de l’arc (travail appliqué)
+<input type="range" id="pull" min="0" max="100" value="0" oninput="drawArc()">
 </label>
+
+<p>Énergie stockée dans l’arc :
+<b><span id="Earc">0</span> J</b></p>
+
+<button onclick="release()">Relâcher la flèche</button>
 </div>
 
 <script>
-let dctx=document.getElementById("defSim").getContext("2d");
-function drawDef(w){
- dctx.clearRect(0,0,400,150);
- for(let i=0;i<8;i++){
-  let x=80+i*30;
-  dctx.beginPath();
-  dctx.arc(x+w/4,75,6,0,Math.PI*2);
-  dctx.fill();
- }
+let ctx = document.getElementById("arcSim").getContext("2d");
+let arrowX = 300;
+let released = false;
+
+function drawArc(){
+  let p = pull.value;
+  let bend = p/3;
+  let E = 0.02*p*p;   // modèle simple d’énergie élastique
+
+  document.getElementById("Earc").innerText = E.toFixed(1);
+
+  ctx.clearRect(0,0,450,200);
+
+  // Arc
+  ctx.beginPath();
+  ctx.moveTo(100,20);
+  ctx.quadraticCurveTo(100-bend,100,100,180);
+  ctx.strokeStyle="brown";
+  ctx.lineWidth=4;
+  ctx.stroke();
+
+  // Corde
+  ctx.beginPath();
+  ctx.moveTo(100,20);
+  ctx.lineTo(100+bend,100);
+  ctx.lineTo(100,180);
+  ctx.strokeStyle="black";
+  ctx.stroke();
+
+  // Flèche
+  arrowX = 100 + bend + 80;
+  ctx.fillRect(arrowX,95,60,5);
+  ctx.beginPath();
+  ctx.moveTo(arrowX+60,95);
+  ctx.lineTo(arrowX+70,97);
+  ctx.lineTo(arrowX+60,100);
+  ctx.fill();
 }
-drawDef(0);
+
+drawArc();
+
+function release(){
+  let interval = setInterval(()=>{
+    arrowX += 8;
+    ctx.clearRect(0,0,450,200);
+    ctx.fillRect(arrowX,95,60,5);
+    ctx.beginPath();
+    ctx.moveTo(arrowX+60,95);
+    ctx.lineTo(arrowX+70,97);
+    ctx.lineTo(arrowX+60,100);
+    ctx.fill();
+    if(arrowX > 400) clearInterval(interval);
+  },40);
+}
 </script>
 
 <div class="box">
-Le travail provoque un éloignement des particules :
-l’énergie interne augmente par modification des interactions.
+La déformation de l’arc correspond à une augmentation de l’énergie interne
+(énergie élastique). Lorsqu’on relâche la corde, cette énergie est transférée
+à la flèche sous forme d’énergie cinétique.
 </div>
+
 </section>
-
-<!-- FROTTEMENT -->
-<section id="frot">
-<h2>2. Frottement : agitation microscopique</h2>
-
-<div class="sim">
-<canvas id="frotSim" width="400" height="150"></canvas>
-<label>Travail dissipé
-<input type="range" min="0" max="50" value="0" oninput="drawFrot(this.value)">
-</label>
-</div>
-
-<script>
-let fctx=document.getElementById("frotSim").getContext("2d");
-function drawFrot(w){
- fctx.clearRect(0,0,400,150);
- for(let i=0;i<12;i++){
-  let vx=(Math.random()-0.5)*w/5;
-  let vy=(Math.random()-0.5)*w/5;
-  fctx.beginPath();
-  fctx.arc(200+vx*10,75+vy*10,5,0,Math.PI*2);
-  fctx.fill();
- }
-}
-drawFrot(0);
-</script>
-
-<div class="box">
-Le travail des frottements augmente l’agitation des particules :
-l’énergie interne augmente (température ↑).
-</div>
-</section>
-
-<!-- CHANGEMENT D'ÉTAT -->
-<section id="etat">
-<h2>3. Changement d’état : organisation microscopique</h2>
-
-<div class="sim">
-<canvas id="stateSim" width="400" height="150"></canvas>
-<label>Énergie interne
-<input type="range" min="0" max="100" value="0" oninput="drawState(this.value)">
-</label>
-<p>État : <b><span id="state">Solide</span></b></p>
-</div>
-
-<script>
-let sctx=document.getElementById("stateSim").getContext("2d");
-function drawState(e){
- sctx.clearRect(0,0,400,150);
- if(e<50){
-  document.getElementById("state").innerText="Solide";
-  for(let i=0;i<12;i++){
-   sctx.beginPath();
-   sctx.arc(100+i*20,75,6,0,Math.PI*2);
-   sctx.fill();
-  }
- } else {
-  document.getElementById("state").innerText="Liquide";
-  for(let i=0;i<12;i++){
-   sctx.beginPath();
-   sctx.arc(80+Math.random()*240,40+Math.random()*70,6,0,Math.PI*2);
-   sctx.fill();
-  }
- }
-}
-drawState(0);
-</script>
-
-<div class="box">
-Le changement d’état correspond à une réorganisation des particules
-sans augmentation immédiate de la température.
-</div>
-</section>
-
-</main>
-</div>
-
-<footer>
-<p>Plateforme pédagogique – Énergie interne (modélisation microscopique)</p>
-</footer>
-
-</body>
-</html>

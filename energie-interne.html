@@ -40,7 +40,7 @@ main{
   background:white;
 }
 section{
-  margin-bottom:40px;
+  margin-bottom:50px;
 }
 h2{
   color:#003366;
@@ -51,10 +51,14 @@ h2{
   border-left:4px solid #003366;
   margin:15px 0;
 }
-svg{
-  margin-top:15px;
+canvas{
   border:1px solid #ccc;
-  background:white;
+  background:#fff;
+}
+button{
+  padding:8px 15px;
+  margin-top:10px;
+  font-weight:bold;
 }
 footer{
   background:#003366;
@@ -63,7 +67,6 @@ footer{
   padding:10px;
 }
 </style>
-
 </head>
 
 <body>
@@ -78,22 +81,20 @@ footer{
 <!-- MENU GAUCHE -->
 <aside>
 <h3>Sommaire</h3>
-<a href="#effets">I- Effets du travail d’une force</a>
-<a href="#deformation">• Déformation</a>
-<a href="#temperature">• Élévation de température</a>
-<a href="#etat">• Changement d’état</a>
+<a href="#effets">I – Effets du travail d’une force</a>
+<a href="#deformation">1. Déformation</a>
+<a href="#temperature">2. Élévation de température</a>
+<a href="#etat">3. Changement d’état</a>
 </aside>
 
 <!-- CONTENU -->
 <main>
 
 <section id="effets">
-<h2>I- Effets du travail d’une force</h2>
-
+<h2>I – Effets du travail d’une force</h2>
 <p>
-Le travail reçu par un corps peut entraîner différentes transformations
-microscopiques. Ces transformations se traduisent par une modification
-de l’<b>énergie interne</b> du système.
+Le travail reçu par un corps peut modifier son état microscopique.
+Ces modifications se traduisent par une variation de l’<b>énergie interne</b>.
 </p>
 
 <div class="box">
@@ -102,88 +103,140 @@ cinétiques et potentielles microscopiques de ses particules.
 </div>
 </section>
 
-<!-- DÉFORMATION -->
+<!-- SIMULATION 1 : DÉFORMATION -->
 <section id="deformation">
-<h2>1. Déformation d’un objet</h2>
+<h2>1. Déformation d’un objet (simulation)</h2>
 
 <p>
-Le travail d’une force peut déformer un objet élastique.
-Cette déformation modifie les interactions microscopiques entre les
-particules constituant l’objet.
+Le travail d’une force peut déformer un objet élastique et stocker de l’énergie.
 </p>
 
-<p><b>Exemple :</b> lorsqu’on tend un arc, il se déforme et emmagasine de l’énergie
-qui pourra être cédée à la flèche.</p>
-
-<svg width="400" height="150">
-  <line x1="80" y1="20" x2="80" y2="130" stroke="brown" stroke-width="6"/>
-  <path d="M80 20 Q150 75 80 130" stroke="black" fill="none" stroke-width="2"/>
-  <line x1="150" y1="75" x2="230" y2="75" stroke="gray" stroke-width="2"/>
-  <polygon points="230,75 215,68 215,82" fill="gray"/>
-  <text x="90" y="15">Arc déformé</text>
-</svg>
+<canvas id="springSim" width="400" height="120"></canvas><br>
+<button onclick="deform()">Tirer sur le ressort</button>
 
 <div class="box">
-La déformation entraîne une mise en réserve d’énergie interne
-qui pourra être restituée.
+La déformation modifie les interactions microscopiques et augmente
+l’énergie interne du système.
 </div>
+
+<script>
+let sctx = document.getElementById("springSim").getContext("2d");
+let stretch = 0;
+
+function drawSpring(){
+  sctx.clearRect(0,0,400,120);
+  sctx.fillText("Mur",10,70);
+  for(let i=0;i<10;i++){
+    sctx.beginPath();
+    sctx.moveTo(50+i*20,60);
+    sctx.lineTo(60+i*20+stretch,60);
+    sctx.stroke();
+  }
+  sctx.fillRect(300+stretch,50,40,20);
+}
+
+drawSpring();
+
+function deform(){
+  if(stretch<40){
+    stretch+=5;
+    drawSpring();
+  }
+}
+</script>
 </section>
 
-<!-- TEMPÉRATURE -->
+<!-- SIMULATION 2 : TEMPÉRATURE -->
 <section id="temperature">
-<h2>2. Élévation de la température</h2>
+<h2>2. Élévation de la température par frottement (simulation)</h2>
 
 <p>
-Le travail des forces de frottement peut provoquer une augmentation
-de la température d’un corps.
+Le travail des forces de frottement peut provoquer une augmentation de la température.
 </p>
 
-<p><b>Exemple :</b> le frottement des freins sur la roue d’un vélo.</p>
-
-<svg width="400" height="150">
-  <circle cx="120" cy="75" r="30" fill="#999"/>
-  <rect x="200" y="60" width="80" height="30" fill="red"/>
-  <text x="90" y="130">Roue</text>
-  <text x="210" y="130">Frein</text>
-  <text x="210" y="50">Frottement</text>
-</svg>
+<canvas id="frictionSim" width="400" height="120"></canvas><br>
+<p>Température : <b><span id="temp">20</span> °C</b></p>
+<button onclick="startFriction()">Appliquer le frottement</button>
 
 <div class="box">
-L’augmentation de la température traduit une plus grande agitation
-microscopique des particules, donc une augmentation de l’énergie
-cinétique microscopique.
+L’augmentation de la température traduit une augmentation de l’agitation
+microscopique des particules, donc de l’énergie interne.
 </div>
+
+<script>
+let fctx = document.getElementById("frictionSim").getContext("2d");
+let x=20, temp=20;
+
+function drawFriction(){
+  fctx.clearRect(0,0,400,120);
+  fctx.fillRect(x,60,40,30);
+  fctx.fillText("Bloc",x,55);
+}
+
+drawFriction();
+
+function startFriction(){
+  let anim = setInterval(()=>{
+    if(x<320){
+      x+=3;
+      temp+=0.3;
+      document.getElementById("temp").innerText=temp.toFixed(1);
+      drawFriction();
+    } else {
+      clearInterval(anim);
+    }
+  },50);
+}
+</script>
 </section>
 
-<!-- CHANGEMENT D'ÉTAT -->
+<!-- SIMULATION 3 : CHANGEMENT D’ÉTAT -->
 <section id="etat">
-<h2>3. Changement d’état</h2>
+<h2>3. Changement d’état (simulation)</h2>
 
 <p>
-Le travail des forces peut également provoquer un changement d’état
-physique d’un corps.
+Le travail reçu peut provoquer un changement d’état physique.
 </p>
 
-<p><b>Exemple :</b> le frottement des skis sur la neige provoque la fusion de la neige.</p>
-
-<svg width="400" height="150">
-  <rect x="60" y="80" width="120" height="30" fill="#b3e5fc"/>
-  <polygon points="200,90 300,110 300,90" fill="#90caf9"/>
-  <text x="70" y="70">Neige</text>
-  <text x="210" y="70">Eau</text>
-</svg>
+<canvas id="stateSim" width="400" height="120"></canvas><br>
+<p>Énergie reçue : <b><span id="energy">0</span> J</b></p>
+<button onclick="addEnergy()">Ajouter de l’énergie</button>
 
 <div class="box">
 Le changement d’état correspond à une modification des interactions
 microscopiques, donc de l’énergie interne.
 </div>
+
+<script>
+let cctx = document.getElementById("stateSim").getContext("2d");
+let e=0;
+
+function drawState(){
+  cctx.clearRect(0,0,400,120);
+  if(e<50){
+    cctx.fillText("Glace",170,60);
+  } else {
+    cctx.fillText("Eau",180,60);
+  }
+}
+
+drawState();
+
+function addEnergy(){
+  if(e<100){
+    e+=10;
+    document.getElementById("energy").innerText=e;
+    drawState();
+  }
+}
+</script>
 </section>
 
 </main>
 </div>
 
 <footer>
-<p>Plateforme pédagogique – Didactique de l’énergie – Maroc</p>
+<p>Plateforme pédagogique – Didactique du concept d’énergie – Maroc</p>
 </footer>
 
 </body>

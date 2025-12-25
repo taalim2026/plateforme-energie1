@@ -8,16 +8,15 @@
 body{margin:0;font-family:Arial;background:#f4f6f8;}
 header{background:#003366;color:#fff;padding:20px;text-align:center;}
 .container{display:flex;}
-aside{width:280px;background:#e8eef5;padding:20px;}
-aside h3{color:#003366;}
+aside{width:260px;background:#e8eef5;padding:20px;}
 aside a{display:block;margin:10px 0;color:#003366;font-weight:bold;text-decoration:none;}
 main{flex:1;padding:30px;background:#fff;}
-section{margin-bottom:50px;}
 h2{color:#003366;}
-.box{background:#eef3f8;padding:15px;border-left:4px solid #003366;margin:15px 0;}
-iframe{border:1px solid #ccc;}
+.sim{border:1px solid #ccc;padding:15px;margin-top:15px;}
+canvas{border:1px solid #999;background:#fff;}
+label{display:block;margin-top:10px;}
+.box{background:#eef3f8;padding:15px;border-left:4px solid #003366;margin-top:15px;}
 footer{background:#003366;color:#fff;text-align:center;padding:10px;}
-ul{margin-left:20px;}
 </style>
 </head>
 
@@ -25,121 +24,129 @@ ul{margin-left:20px;}
 
 <header>
 <h1>Travail et énergie interne</h1>
-<p>1ʳᵉ Bac Sciences Mathématiques & Sciences Physiques – Programme marocain</p>
+<p>1ʳᵉ Bac SM & SP – Modélisation microscopique</p>
 </header>
 
 <div class="container">
 
-<!-- MENU GAUCHE -->
 <aside>
 <h3>Sommaire</h3>
-<a href="#intro">I – Effets du travail d’une force</a>
-<a href="#micro">1. Agitation microscopique</a>
-<a href="#temp">2. Élévation de température</a>
+<a href="#def">I – Effets du travail</a>
+<a href="#defor">1. Déformation</a>
+<a href="#frot">2. Frottement</a>
 <a href="#etat">3. Changement d’état</a>
 </aside>
 
-<!-- CONTENU -->
 <main>
 
-<section id="intro">
-<h2>I – Effets du travail d’une force</h2>
-
-<p>
-Le travail mécanique reçu par un système peut modifier son état
-microscopique. Ces modifications se traduisent par une variation
-de son <b>énergie interne</b>, notée <b>U</b>.
-</p>
-
+<section id="def">
 <div class="box">
-L’énergie interne d’un système correspond à la somme des énergies
-cinétiques et potentielles microscopiques de ses particules.
+L’énergie interne U correspond à l’énergie microscopique des particules
+(agitation + interactions).
 </div>
 </section>
 
-<!-- 1. AGITATION MICROSCOPIQUE -->
-<section id="micro">
-<h2>1. Augmentation de l’agitation microscopique</h2>
+<!-- DÉFORMATION -->
+<section id="defor">
+<h2>1. Déformation : interactions microscopiques</h2>
 
-<p>
-Lorsque le travail reçu par un système est dissipé, il se traduit
-par une augmentation de l’agitation des particules constituant le système.
-</p>
+<div class="sim">
+<canvas id="defSim" width="400" height="150"></canvas>
+<label>Travail reçu
+<input type="range" min="0" max="50" value="0" oninput="drawDef(this.value)">
+</label>
+</div>
 
-<p><b>Simulation (PhET – propriétés d’un gaz)</b></p>
-
-<ul>
-<li><b>Avant :</b> observer la vitesse des particules</li>
-<li><b>Pendant :</b> augmenter l’énergie du système</li>
-<li><b>Après :</b> décrire l’évolution de l’agitation microscopique</li>
-</ul>
-
-<iframe
-src="https://phet.colorado.edu/sims/html/gas-properties/latest/gas-properties_fr.html"
-width="100%" height="450">
-</iframe>
+<script>
+let dctx=document.getElementById("defSim").getContext("2d");
+function drawDef(w){
+ dctx.clearRect(0,0,400,150);
+ for(let i=0;i<8;i++){
+  let x=80+i*30;
+  dctx.beginPath();
+  dctx.arc(x+w/4,75,6,0,Math.PI*2);
+  dctx.fill();
+ }
+}
+drawDef(0);
+</script>
 
 <div class="box">
-L’augmentation de l’agitation microscopique traduit une augmentation
-de l’énergie cinétique microscopique, donc de l’énergie interne.
+Le travail provoque un éloignement des particules :
+l’énergie interne augmente par modification des interactions.
 </div>
 </section>
 
-<!-- 2. TEMPÉRATURE -->
-<section id="temp">
-<h2>2. Élévation de la température par frottement</h2>
+<!-- FROTTEMENT -->
+<section id="frot">
+<h2>2. Frottement : agitation microscopique</h2>
 
-<p>
-Le travail des forces de frottement est un mode de transfert d’énergie
-qui augmente l’énergie interne du système, se traduisant par une
-élévation de la température.
-</p>
+<div class="sim">
+<canvas id="frotSim" width="400" height="150"></canvas>
+<label>Travail dissipé
+<input type="range" min="0" max="50" value="0" oninput="drawFrot(this.value)">
+</label>
+</div>
 
-<p><b>Simulation (PhET – Energy Forms and Changes)</b></p>
-
-<ul>
-<li><b>Avant :</b> relever la température initiale</li>
-<li><b>Pendant :</b> appliquer un travail mécanique</li>
-<li><b>Après :</b> relier la variation de température à l’énergie reçue</li>
-</ul>
-
-<iframe
-src="https://phet.colorado.edu/sims/html/energy-forms-and-changes/latest/energy-forms-and-changes_fr.html"
-width="100%" height="450">
-</iframe>
+<script>
+let fctx=document.getElementById("frotSim").getContext("2d");
+function drawFrot(w){
+ fctx.clearRect(0,0,400,150);
+ for(let i=0;i<12;i++){
+  let vx=(Math.random()-0.5)*w/5;
+  let vy=(Math.random()-0.5)*w/5;
+  fctx.beginPath();
+  fctx.arc(200+vx*10,75+vy*10,5,0,Math.PI*2);
+  fctx.fill();
+ }
+}
+drawFrot(0);
+</script>
 
 <div class="box">
-L’élévation de la température est une manifestation macroscopique
-de l’augmentation de l’énergie interne.
+Le travail des frottements augmente l’agitation des particules :
+l’énergie interne augmente (température ↑).
 </div>
 </section>
 
-<!-- 3. CHANGEMENT D’ÉTAT -->
+<!-- CHANGEMENT D'ÉTAT -->
 <section id="etat">
-<h2>3. Changement d’état physique</h2>
+<h2>3. Changement d’état : organisation microscopique</h2>
 
-<p>
-Le travail reçu par un système peut modifier les interactions
-microscopiques sans variation de température, entraînant
-un changement d’état physique.
-</p>
+<div class="sim">
+<canvas id="stateSim" width="400" height="150"></canvas>
+<label>Énergie interne
+<input type="range" min="0" max="100" value="0" oninput="drawState(this.value)">
+</label>
+<p>État : <b><span id="state">Solide</span></b></p>
+</div>
 
-<p><b>Simulation (PhET – States of Matter)</b></p>
-
-<ul>
-<li><b>Avant :</b> identifier l’état initial</li>
-<li><b>Pendant :</b> fournir de l’énergie au système</li>
-<li><b>Après :</b> observer le changement d’organisation microscopique</li>
-</ul>
-
-<iframe
-src="https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_fr.html"
-width="100%" height="450">
-</iframe>
+<script>
+let sctx=document.getElementById("stateSim").getContext("2d");
+function drawState(e){
+ sctx.clearRect(0,0,400,150);
+ if(e<50){
+  document.getElementById("state").innerText="Solide";
+  for(let i=0;i<12;i++){
+   sctx.beginPath();
+   sctx.arc(100+i*20,75,6,0,Math.PI*2);
+   sctx.fill();
+  }
+ } else {
+  document.getElementById("state").innerText="Liquide";
+  for(let i=0;i<12;i++){
+   sctx.beginPath();
+   sctx.arc(80+Math.random()*240,40+Math.random()*70,6,0,Math.PI*2);
+   sctx.fill();
+  }
+ }
+}
+drawState(0);
+</script>
 
 <div class="box">
-Le changement d’état correspond à une variation de l’énergie interne
-liée aux interactions potentielles microscopiques.
+Le changement d’état correspond à une réorganisation des particules
+sans augmentation immédiate de la température.
 </div>
 </section>
 
@@ -147,7 +154,7 @@ liée aux interactions potentielles microscopiques.
 </div>
 
 <footer>
-<p>Plateforme pédagogique – Didactique du concept d’énergie – Maroc</p>
+<p>Plateforme pédagogique – Énergie interne (modélisation microscopique)</p>
 </footer>
 
 </body>

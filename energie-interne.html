@@ -5,67 +5,17 @@
 <title>Travail et énergie interne</title>
 
 <style>
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#f4f6f8;
-}
-header{
-  background:#003366;
-  color:white;
-  padding:20px;
-  text-align:center;
-}
-.container{
-  display:flex;
-}
-aside{
-  width:260px;
-  background:#e8eef5;
-  padding:20px;
-}
-aside h3{
-  color:#003366;
-}
-aside a{
-  display:block;
-  margin:10px 0;
-  color:#003366;
-  text-decoration:none;
-  font-weight:bold;
-}
-main{
-  flex:1;
-  padding:30px;
-  background:white;
-}
-section{
-  margin-bottom:50px;
-}
-h2{
-  color:#003366;
-}
-.box{
-  background:#eef3f8;
-  padding:15px;
-  border-left:4px solid #003366;
-  margin:15px 0;
-}
-canvas{
-  border:1px solid #ccc;
-  background:#fff;
-}
-button{
-  padding:8px 15px;
-  margin-top:10px;
-  font-weight:bold;
-}
-footer{
-  background:#003366;
-  color:white;
-  text-align:center;
-  padding:10px;
-}
+body{margin:0;font-family:Arial;background:#f4f6f8;}
+header{background:#003366;color:#fff;padding:20px;text-align:center;}
+.container{display:flex;}
+aside{width:260px;background:#e8eef5;padding:20px;}
+aside a{display:block;margin:10px 0;color:#003366;font-weight:bold;text-decoration:none;}
+main{flex:1;padding:30px;background:#fff;}
+h2{color:#003366;}
+.box{background:#eef3f8;padding:15px;border-left:4px solid #003366;margin:15px 0;}
+.sim{background:#fafafa;padding:15px;border:1px solid #ccc;margin-top:15px;}
+label{display:block;margin-top:10px;}
+footer{background:#003366;color:#fff;text-align:center;padding:10px;}
 </style>
 </head>
 
@@ -78,157 +28,106 @@ footer{
 
 <div class="container">
 
-<!-- MENU GAUCHE -->
 <aside>
 <h3>Sommaire</h3>
-<a href="#effets">I – Effets du travail d’une force</a>
-<a href="#deformation">1. Déformation</a>
-<a href="#temperature">2. Élévation de température</a>
+<a href="#def">I – Effets du travail d’une force</a>
+<a href="#defor">1. Déformation</a>
+<a href="#temp">2. Élévation de température</a>
 <a href="#etat">3. Changement d’état</a>
 </aside>
 
-<!-- CONTENU -->
 <main>
 
-<section id="effets">
+<section id="def">
 <h2>I – Effets du travail d’une force</h2>
-<p>
-Le travail reçu par un corps peut modifier son état microscopique.
-Ces modifications se traduisent par une variation de l’<b>énergie interne</b>.
-</p>
-
 <div class="box">
-L’énergie interne d’un système, notée <b>U</b>, est la somme des énergies
-cinétiques et potentielles microscopiques de ses particules.
+L’énergie interne U est la somme des énergies microscopiques
+(cinétique + potentielle) des particules d’un système.
 </div>
 </section>
 
-<!-- SIMULATION 1 : DÉFORMATION -->
-<section id="deformation">
-<h2>1. Déformation d’un objet (simulation)</h2>
+<!-- DÉFORMATION -->
+<section id="defor">
+<h2>1. Déformation d’un objet élastique</h2>
+<p>Le travail reçu est stocké sous forme d’énergie interne.</p>
 
-<p>
-Le travail d’une force peut déformer un objet élastique et stocker de l’énergie.
-</p>
+<div class="sim">
+<label>Force appliquée (N) :
+<input type="range" id="force" min="0" max="50" value="10"
+oninput="calcDef()"></label>
 
-<canvas id="springSim" width="400" height="120"></canvas><br>
-<button onclick="deform()">Tirer sur le ressort</button>
+<label>Allongement (m) :
+<input type="range" id="elong" min="0" max="0.5" step="0.05" value="0.1"
+oninput="calcDef()"></label>
 
-<div class="box">
-La déformation modifie les interactions microscopiques et augmente
-l’énergie interne du système.
-</div>
+<p>Travail reçu :
+<b><span id="Wdef">0</span> J</b></p>
 
-<script>
-let sctx = document.getElementById("springSim").getContext("2d");
-let stretch = 0;
-
-function drawSpring(){
-  sctx.clearRect(0,0,400,120);
-  sctx.fillText("Mur",10,70);
-  for(let i=0;i<10;i++){
-    sctx.beginPath();
-    sctx.moveTo(50+i*20,60);
-    sctx.lineTo(60+i*20+stretch,60);
-    sctx.stroke();
-  }
-  sctx.fillRect(300+stretch,50,40,20);
-}
-
-drawSpring();
-
-function deform(){
-  if(stretch<40){
-    stretch+=5;
-    drawSpring();
-  }
-}
-</script>
-</section>
-
-<!-- SIMULATION 2 : TEMPÉRATURE -->
-<section id="temperature">
-<h2>2. Élévation de la température par frottement (simulation)</h2>
-
-<p>
-Le travail des forces de frottement peut provoquer une augmentation de la température.
-</p>
-
-<canvas id="frictionSim" width="400" height="120"></canvas><br>
-<p>Température : <b><span id="temp">20</span> °C</b></p>
-<button onclick="startFriction()">Appliquer le frottement</button>
-
-<div class="box">
-L’augmentation de la température traduit une augmentation de l’agitation
-microscopique des particules, donc de l’énergie interne.
+<p>Variation de l’énergie interne :
+<b>ΔU = W</b></p>
 </div>
 
 <script>
-let fctx = document.getElementById("frictionSim").getContext("2d");
-let x=20, temp=20;
-
-function drawFriction(){
-  fctx.clearRect(0,0,400,120);
-  fctx.fillRect(x,60,40,30);
-  fctx.fillText("Bloc",x,55);
+function calcDef(){
+  let F=parseFloat(force.value);
+  let x=parseFloat(elong.value);
+  let W=F*x;
+  Wdef.innerText=W.toFixed(2);
 }
-
-drawFriction();
-
-function startFriction(){
-  let anim = setInterval(()=>{
-    if(x<320){
-      x+=3;
-      temp+=0.3;
-      document.getElementById("temp").innerText=temp.toFixed(1);
-      drawFriction();
-    } else {
-      clearInterval(anim);
-    }
-  },50);
-}
+calcDef();
 </script>
 </section>
 
-<!-- SIMULATION 3 : CHANGEMENT D’ÉTAT -->
+<!-- TEMPÉRATURE -->
+<section id="temp">
+<h2>2. Élévation de la température par frottement</h2>
+<p>Le travail des frottements augmente l’agitation microscopique.</p>
+
+<div class="sim">
+<label>Force de frottement (N) :
+<input type="range" id="ff" min="0" max="20" value="5"
+oninput="calcTemp()"></label>
+
+<label>Distance parcourue (m) :
+<input type="range" id="d" min="0" max="10" value="2"
+oninput="calcTemp()"></label>
+
+<p>Travail des frottements :
+<b><span id="Wf">0</span> J</b></p>
+
+<p>Température :
+<b><span id="T">20</span> °C</b></p>
+</div>
+
+<script>
+function calcTemp(){
+  let W=ff.value*d.value;
+  Wf.innerText=W.toFixed(1);
+  T.innerText=(20+0.5*W).toFixed(1);
+}
+calcTemp();
+</script>
+</section>
+
+<!-- CHANGEMENT D'ÉTAT -->
 <section id="etat">
-<h2>3. Changement d’état (simulation)</h2>
+<h2>3. Changement d’état</h2>
+<p>Le travail reçu peut modifier l’état physique sans variation de température.</p>
 
-<p>
-Le travail reçu peut provoquer un changement d’état physique.
-</p>
+<div class="sim">
+<label>Énergie reçue (J) :
+<input type="range" id="E" min="0" max="200" value="0"
+oninput="calcState()"></label>
 
-<canvas id="stateSim" width="400" height="120"></canvas><br>
-<p>Énergie reçue : <b><span id="energy">0</span> J</b></p>
-<button onclick="addEnergy()">Ajouter de l’énergie</button>
-
-<div class="box">
-Le changement d’état correspond à une modification des interactions
-microscopiques, donc de l’énergie interne.
+<p>État du système :
+<b><span id="state">Glace</span></b></p>
 </div>
 
 <script>
-let cctx = document.getElementById("stateSim").getContext("2d");
-let e=0;
-
-function drawState(){
-  cctx.clearRect(0,0,400,120);
-  if(e<50){
-    cctx.fillText("Glace",170,60);
-  } else {
-    cctx.fillText("Eau",180,60);
-  }
+function calcState(){
+  state.innerText = E.value<100 ? "Glace" : "Eau (fusion)";
 }
-
-drawState();
-
-function addEnergy(){
-  if(e<100){
-    e+=10;
-    document.getElementById("energy").innerText=e;
-    drawState();
-  }
-}
+calcState();
 </script>
 </section>
 
@@ -236,7 +135,7 @@ function addEnergy(){
 </div>
 
 <footer>
-<p>Plateforme pédagogique – Didactique du concept d’énergie – Maroc</p>
+<p>Plateforme pédagogique – Didactique de l’énergie – Maroc</p>
 </footer>
 
 </body>

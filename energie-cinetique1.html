@@ -1,28 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Énergie cinétique – 1ʳᵉ Bac</title>
-
-<style>
-body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; line-height:1.6; }
-header { background:#003366; color:white; padding:20px; text-align:center; }
-nav { background:#005599; padding:10px; text-align:center; }
-nav a { color:white; margin:0 12px; text-decoration:none; font-weight:bold; }
-section { background:white; margin:20px; padding:20px; border-radius:8px; }
-h2 { color:#003366; }
-.box { background:#eef3f8; padding:15px; border-left:4px solid #003366; margin:15px 0; }
-.exercise { background:#f9f9f9; padding:15px; border-left:4px solid #999; margin:15px 0; }
-svg { background:#ffffff; border:1px solid #ccc; margin-top:10px; }
-footer { background:#003366; color:white; text-align:center; padding:10px; margin-top:30px; }
-</style>
-
-</head>
-
 <body>
 
 <header>
-<h1>Énergie cinétique</h1>
+<h1>Travail et énergie cinétique</h1>
 <p>1ʳᵉ Bac Sciences Mathématiques & Sciences Physiques</p>
 </header>
 
@@ -37,12 +16,12 @@ footer { background:#003366; color:white; text-align:center; padding:10px; margi
 <section>
 <h2>1. Définition de l’énergie cinétique</h2>
 <p>
-Un solide de masse <b>m</b>, animé d’un mouvement de translation à la vitesse <b>v</b>,
-possède une <b>énergie cinétique</b>.
+Un solide de masse <b>m</b> animé d’un mouvement de translation à la vitesse <b>v</b>
+possède une <b>énergie cinétique</b>, notée <b>Ec</b>.
 </p>
 
 <div class="box">
-<b>Expression mathématique :</b><br>
+<b>Expression :</b><br>
 Ec = ½ m v²
 </div>
 
@@ -60,29 +39,34 @@ L’énergie cinétique dépend :
 </section>
 
 <section>
-<h2>2. Interprétation physique</h2>
+<h2>2. Analyse des paramètres</h2>
 <p>
-Plus la vitesse d’un objet est grande, plus son énergie cinétique est importante.
-Si la vitesse double, l’énergie cinétique est multipliée par <b>4</b>.
+À masse constante, l’énergie cinétique est proportionnelle au carré de la vitesse.
+Ainsi :
+</p>
+<ul>
+<li>si la vitesse double, l’énergie cinétique est multipliée par 4</li>
+<li>si la vitesse est divisée par 2, l’énergie cinétique est divisée par 4</li>
+</ul>
+<p>
+Cette dépendance explique l’importance des distances de freinage à grande vitesse.
 </p>
 </section>
 
 <section>
-<h2>3. Schéma explicatif</h2>
+<h2>3. Représentation schématique</h2>
+<p>Solide en mouvement de translation :</p>
 
-<p>Représentation d’un solide en mouvement :</p>
-
-<svg width="400" height="150">
-  <rect x="50" y="60" width="60" height="30" fill="#4CAF50"/>
-  <line x1="110" y1="75" x2="200" y2="75" stroke="red" stroke-width="4"/>
-  <polygon points="200,75 185,68 185,82" fill="red"/>
-  <text x="125" y="55" fill="black">v</text>
-  <text x="50" y="115" fill="black">Solide (m)</text>
+<svg width="420" height="160">
+  <rect x="60" y="70" width="70" height="30" fill="#4CAF50"/>
+  <line x1="130" y1="85" x2="260" y2="85" stroke="red" stroke-width="4"/>
+  <polygon points="260,85 245,78 245,92" fill="red"/>
+  <text x="155" y="60">v</text>
+  <text x="60" y="125">m</text>
 </svg>
 
 <p>
-Le vecteur vitesse caractérise le mouvement du solide et explique l’existence de
-l’énergie cinétique.
+La présence d’une vitesse non nulle explique l’existence de l’énergie cinétique.
 </p>
 </section>
 
@@ -90,24 +74,25 @@ l’énergie cinétique.
 <h2>4. Théorème de l’énergie cinétique</h2>
 
 <div class="box">
-La variation de l’énergie cinétique d’un solide entre deux positions est égale
-à la somme des travaux des forces qui s’exercent sur lui.
+La variation de l’énergie cinétique d’un solide entre deux positions
+est égale à la somme des travaux des forces qui s’exercent sur lui.
 </div>
 
 <p>
-Ce théorème permet de relier <b>travail</b> et <b>énergie</b>.
+Ce théorème établit un lien fondamental entre le travail des forces
+et la variation de l’énergie cinétique.
 </p>
 </section>
 
 <section>
 <h2>5. Activité interactive (PhET)</h2>
-
-<p><b>Simulation utilisée :</b> Energy Skate Park</p>
+<p><b>Simulation :</b> Energy Skate Park (PhET)</p>
 
 <p><b>Consignes :</b></p>
 <ul>
 <li>Observer l’évolution de l’énergie cinétique lorsque la vitesse augmente</li>
 <li>Comparer énergie cinétique et énergie potentielle</li>
+<li>Identifier les situations où l’énergie mécanique se conserve</li>
 </ul>
 
 <iframe
@@ -121,22 +106,22 @@ width="100%" height="500">
 
 <div class="exercise">
 <b>Exercice 1 :</b><br>
-Un solide de masse 2 kg se déplace à une vitesse de 4 m·s⁻¹.<br>
+Un solide de masse 3 kg se déplace à la vitesse de 6 m·s⁻¹.<br>
 1) Calculer son énergie cinétique.<br>
-2) Que devient l’énergie cinétique si la vitesse double ?
+2) Comparer cette énergie à celle d’un solide de masse 6 kg se déplaçant à 3 m·s⁻¹.
 </div>
 
 <div class="exercise">
 <b>Exercice 2 :</b><br>
-Un véhicule de masse 1000 kg roule à 20 m·s⁻¹ puis freine jusqu’à l’arrêt.<br>
+Une voiture de masse 1200 kg roule à 20 m·s⁻¹ puis freine jusqu’à l’arrêt.<br>
 1) Calculer l’énergie cinétique initiale.<br>
-2) Comment varie l’énergie cinétique pendant le freinage ?
+2) Interpréter physiquement la diminution de cette énergie.
 </div>
 
 <div class="exercise">
 <b>Exercice 3 (raisonnement) :</b><br>
-Deux solides A et B ont la même énergie cinétique.  
-Le solide A est deux fois plus massif que B.  
+Deux solides A et B possèdent la même énergie cinétique.<br>
+Le solide A a une masse double de celle de B.<br>
 Comparer leurs vitesses.
 </div>
 </section>
@@ -146,4 +131,3 @@ Comparer leurs vitesses.
 </footer>
 
 </body>
-</html>

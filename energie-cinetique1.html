@@ -1,8 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Énergie cinétique – 1ʳᵉ Bac</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background:#f4f6f8;
+  line-height:1.6;
+}
+header{
+  background:#003366;
+  color:#fff;
+  padding:20px;
+  text-align:center;
+}
+nav{
+  background:#005599;
+  padding:10px;
+  text-align:center;
+}
+nav a{
+  color:#fff;
+  margin:0 12px;
+  text-decoration:none;
+  font-weight:bold;
+}
+section{
+  background:#fff;
+  margin:20px;
+  padding:20px;
+  border-radius:8px;
+}
+h2{ color:#003366; }
+.box{
+  background:#eef3f8;
+  padding:15px;
+  border-left:4px solid #003366;
+  margin:15px 0;
+}
+.exercise{
+  background:#f9f9f9;
+  padding:15px;
+  border-left:4px solid #999;
+  margin:15px 0;
+}
+footer{
+  background:#003366;
+  color:#fff;
+  text-align:center;
+  padding:10px;
+  margin-top:30px;
+}
+svg{
+  background:#fff;
+  border:1px solid #ccc;
+  margin-top:10px;
+}
+</style>
+</head>
+
 <body>
 
 <header>
 <h1>Travail et énergie cinétique</h1>
-<p>1ʳᵉ Bac Sciences Mathématiques & Sciences Physiques</p>
+<p>1ʳᵉ Bac Sciences Mathématiques & Sciences Physiques – Programme marocain</p>
 </header>
 
 <nav>
@@ -21,7 +85,7 @@ possède une <b>énergie cinétique</b>, notée <b>Ec</b>.
 </p>
 
 <div class="box">
-<b>Expression :</b><br>
+<b>Expression mathématique :</b><br>
 Ec = ½ m v²
 </div>
 
@@ -39,34 +103,32 @@ L’énergie cinétique dépend :
 </section>
 
 <section>
-<h2>2. Analyse des paramètres</h2>
+<h2>2. Analyse de l’expression Ec = ½ m v²</h2>
 <p>
 À masse constante, l’énergie cinétique est proportionnelle au carré de la vitesse.
-Ainsi :
 </p>
 <ul>
 <li>si la vitesse double, l’énergie cinétique est multipliée par 4</li>
 <li>si la vitesse est divisée par 2, l’énergie cinétique est divisée par 4</li>
 </ul>
 <p>
-Cette dépendance explique l’importance des distances de freinage à grande vitesse.
+Cette dépendance explique l’augmentation rapide des distances de freinage.
 </p>
 </section>
 
 <section>
 <h2>3. Représentation schématique</h2>
-<p>Solide en mouvement de translation :</p>
 
 <svg width="420" height="160">
   <rect x="60" y="70" width="70" height="30" fill="#4CAF50"/>
   <line x1="130" y1="85" x2="260" y2="85" stroke="red" stroke-width="4"/>
   <polygon points="260,85 245,78 245,92" fill="red"/>
-  <text x="155" y="60">v</text>
+  <text x="160" y="60">v</text>
   <text x="60" y="125">m</text>
 </svg>
 
 <p>
-La présence d’une vitesse non nulle explique l’existence de l’énergie cinétique.
+Le vecteur vitesse caractérise le mouvement du solide.
 </p>
 </section>
 
@@ -79,21 +141,14 @@ est égale à la somme des travaux des forces qui s’exercent sur lui.
 </div>
 
 <p>
-Ce théorème établit un lien fondamental entre le travail des forces
-et la variation de l’énergie cinétique.
+Ce théorème relie le travail des forces à la variation de l’énergie cinétique.
 </p>
 </section>
 
 <section>
 <h2>5. Activité interactive (PhET)</h2>
-<p><b>Simulation :</b> Energy Skate Park (PhET)</p>
 
-<p><b>Consignes :</b></p>
-<ul>
-<li>Observer l’évolution de l’énergie cinétique lorsque la vitesse augmente</li>
-<li>Comparer énergie cinétique et énergie potentielle</li>
-<li>Identifier les situations où l’énergie mécanique se conserve</li>
-</ul>
+<p><b>Simulation :</b> Energy Skate Park</p>
 
 <iframe
 src="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_fr.html"
@@ -105,29 +160,22 @@ width="100%" height="500">
 <h2>6. Exercices d’application (niveau Bac)</h2>
 
 <div class="exercise">
-<b>Exercice 1 :</b><br>
-Un solide de masse 3 kg se déplace à la vitesse de 6 m·s⁻¹.<br>
-1) Calculer son énergie cinétique.<br>
-2) Comparer cette énergie à celle d’un solide de masse 6 kg se déplaçant à 3 m·s⁻¹.
+<b>Exercice 1 :</b>  
+Un solide de masse 2 kg se déplace à 5 m·s⁻¹.  
+Calculer son énergie cinétique.
 </div>
 
 <div class="exercise">
-<b>Exercice 2 :</b><br>
-Une voiture de masse 1200 kg roule à 20 m·s⁻¹ puis freine jusqu’à l’arrêt.<br>
-1) Calculer l’énergie cinétique initiale.<br>
-2) Interpréter physiquement la diminution de cette énergie.
+<b>Exercice 2 :</b>  
+Une voiture de masse 1200 kg roule à 20 m·s⁻¹ puis s’arrête.  
+Interpréter la variation de l’énergie cinétique.
 </div>
 
-<div class="exercise">
-<b>Exercice 3 (raisonnement) :</b><br>
-Deux solides A et B possèdent la même énergie cinétique.<br>
-Le solide A a une masse double de celle de B.<br>
-Comparer leurs vitesses.
-</div>
 </section>
 
 <footer>
-<p>Plateforme pédagogique – Didactique de l’énergie – Maroc</p>
+<p>Plateforme pédagogique – Didactique du concept d’énergie – Maroc</p>
 </footer>
 
 </body>
+</html>

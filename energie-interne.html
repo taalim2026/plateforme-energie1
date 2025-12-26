@@ -5,46 +5,16 @@
 <title>Travail et énergie interne</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f4f6f8;
-  line-height:1.6;
-}
-header{
-  background:#003366;
-  color:#fff;
-  padding:25px;
-  text-align:center;
-}
-main{
-  max-width:1000px;
-  margin:auto;
-  background:#fff;
-  padding:40px;
-}
-section{
-  margin-bottom:50px;
-}
-h2{
-  color:#003366;
-}
-h3{
-  color:#005599;
-}
-.box{
-  background:#eef3f8;
-  padding:20px;
-  border-left:4px solid #003366;
-  margin-top:15px;
-}
-footer{
-  background:#003366;
-  color:#fff;
-  text-align:center;
-  padding:12px;
-  margin-top:40px;
-}
+body{margin:0;font-family:Arial;background:#f4f6f8;line-height:1.6;}
+header{background:#003366;color:#fff;padding:25px;text-align:center;}
+main{max-width:1100px;margin:auto;background:#fff;padding:40px;}
+section{margin-bottom:60px;}
+h2{color:#003366;}
+h3{color:#005599;}
+.box{background:#eef3f8;padding:18px;border-left:4px solid #003366;margin:15px 0;}
+.sim{background:#fafafa;border:1px solid #ccc;padding:20px;margin-top:15px;}
+canvas{border:1px solid #999;background:#fff;}
+footer{background:#003366;color:#fff;text-align:center;padding:12px;margin-top:40px;}
 </style>
 </head>
 
@@ -57,97 +27,90 @@ footer{
 
 <main>
 
+<!-- I -->
 <section>
 <h2>I – Effets du travail d’une force</h2>
-
 <div class="box">
-Cette partie vise à mettre en évidence que le travail d’une force peut
-modifier l’état d’un système. Ces modifications peuvent se traduire
-par une déformation, une élévation de température ou un changement
-d’état physique.
+Observer comment le travail mécanique modifie l’état d’un système.
+</div>
+
+<div class="sim">
+<b>Simulation – Déformation d’un objet élastique</b><br><br>
+<canvas id="def" width="400" height="120"></canvas>
+</div>
+
+<div class="sim">
+<b>Simulation – Frottement et agitation microscopique</b><br><br>
+<canvas id="frot" width="400" height="120"></canvas>
 </div>
 </section>
 
+<!-- II -->
 <section>
 <h2>II – Énergie interne d’un système</h2>
 
-<section>
-<h3>2.1 Définition</h3>
-<div class="box">
-L’énergie interne d’un système correspond à l’ensemble des énergies
-microscopiques liées au mouvement et aux interactions des particules
-qui constituent ce système.
-</div>
-</section>
-
-<section>
 <h3>2.2 Énergies cinétiques microscopiques</h3>
-<div class="box">
-Cette partie met l’accent sur le lien entre l’agitation microscopique
-des particules et l’énergie interne, notamment à travers la notion
-de température.
+<div class="sim">
+<b>Simulation – Agitation microscopique</b><br><br>
+<canvas id="microK" width="400" height="120"></canvas>
 </div>
-</section>
 
-<section>
 <h3>2.3 Énergies potentielles microscopiques</h3>
-<div class="box">
-Cette sous-partie concerne l’énergie associée aux interactions
-microscopiques entre les particules, en lien avec l’état physique
-du système.
+<div class="sim">
+<b>Simulation – Interactions microscopiques</b><br><br>
+<canvas id="microP" width="400" height="120"></canvas>
 </div>
 </section>
 
-</section>
-
+<!-- III -->
 <section>
 <h2>III – Échange d’énergie au cours d’une transformation</h2>
-
-<section>
-<h3>3.1 Échange d’énergie</h3>
-<div class="box">
-Cette partie vise à identifier les différents modes d’échange d’énergie
-entre un système et son environnement lors d’une transformation.
+<div class="sim">
+<b>Simulation – Système recevant ou cédant de l’énergie</b><br><br>
+<canvas id="exchange" width="400" height="120"></canvas>
 </div>
 </section>
 
-<section>
-<h3>3.2 Variation de l’énergie d’un système</h3>
-<div class="box">
-On s’intéresse ici à l’évolution de l’énergie interne d’un système
-lorsqu’il reçoit ou cède de l’énergie.
-</div>
-</section>
-
-</section>
-
+<!-- IV -->
 <section>
 <h2>IV – Premier principe de la thermodynamique</h2>
-
-<section>
-<h3>4.1 Énoncé</h3>
-<div class="box">
-Cette sous-partie est consacrée à la signification physique du premier
-principe de la thermodynamique, interprété comme un principe de
-conservation de l’énergie.
+<div class="sim">
+<b>Simulation – Bilan énergétique simplifié</b><br><br>
+<canvas id="balance" width="400" height="120"></canvas>
 </div>
-</section>
-
-<section>
-<h3>4.2 Conséquences</h3>
-<div class="box">
-Les conséquences du premier principe sont abordées à travers l’analyse
-qualitative des transformations énergétiques des systèmes.
-</div>
-</section>
-
 </section>
 
 </main>
 
 <footer>
-<p>Plateforme pédagogique – Concepts d’énergie</p>
+<p>Plateforme pédagogique – Simulations des concepts d’énergie</p>
 </footer>
+
+<script>
+// Déformation
+const d=document.getElementById("def").getContext("2d");
+for(let i=0;i<8;i++){d.beginPath();d.arc(80+i*30,60,6,0,Math.PI*2);d.fill();}
+
+// Frottement
+const f=document.getElementById("frot").getContext("2d");
+for(let i=0;i<12;i++){f.beginPath();f.arc(200+Math.random()*20,60+Math.random()*20,5,0,Math.PI*2);f.fill();}
+
+// Agitation
+const k=document.getElementById("microK").getContext("2d");
+for(let i=0;i<12;i++){k.beginPath();k.arc(60+Math.random()*280,30+Math.random()*60,5,0,Math.PI*2);k.fill();}
+
+// Interactions
+const p=document.getElementById("microP").getContext("2d");
+for(let i=0;i<10;i++){p.beginPath();p.arc(80+i*25,60,6,0,Math.PI*2);p.fill();}
+
+// Échange
+const e=document.getElementById("exchange").getContext("2d");
+e.fillRect(50,40,80,40); e.fillRect(270,40,80,40);
+
+// Bilan
+const b=document.getElementById("balance").getContext("2d");
+b.fillText("Énergie reçue = variation d'énergie",80,60);
+</script>
 
 </body>
 </html>

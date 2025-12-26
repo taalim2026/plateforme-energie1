@@ -2,38 +2,188 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Plateforme – Travail et énergie</title>
+<title>Plateforme – Concepts d’énergie</title>
+
 <style>
-body { font-family: Arial; background:#f4f6f8; margin:0; }
-header { background:#003366; color:white; padding:20px; text-align:center; }
-nav { background:#005599; padding:10px; text-align:center; }
-nav a { color:white; margin:0 10px; text-decoration:none; font-weight:bold; }
-section { background:white; margin:20px; padding:20px; border-radius:8px; }
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f8;
+  line-height:1.6;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(rgba(0,40,80,0.6),rgba(0,40,80,0.6)),
+  url("https://images.unsplash.com/photo-1532094349884-543bc11b234d");
+  background-size:cover;
+  background-position:center;
+  color:white;
+  padding:80px 20px;
+  text-align:center;
+}
+.hero h1{font-size:42px;margin-bottom:10px;}
+.hero p{font-size:20px;max-width:800px;margin:auto;}
+
+/* NAV */
+nav{
+  background:#003366;
+  padding:12px;
+  text-align:center;
+}
+nav a{
+  color:white;
+  margin:0 15px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* MAIN */
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+  background:white;
+}
+section{margin-bottom:60px;}
+h2{color:#003366;}
+
+/* BOX */
+.box{
+  background:#eef3f8;
+  padding:20px;
+  border-left:5px solid #003366;
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.card{
+  background:#f9f9f9;
+  padding:20px;
+  border-radius:8px;
+  text-align:center;
+}
+.card img{
+  width:100%;
+  border-radius:6px;
+  margin-bottom:10px;
+}
+
+/* FOOTER */
+footer{
+  background:#003366;
+  color:white;
+  text-align:center;
+  padding:12px;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>Plateforme didactique – Travail et énergie</h1>
-<p>1ʳᵉ Bac Sciences Mathématiques & Sciences Physiques</p>
-</header>
+<!-- HERO -->
+<div class="hero">
+  <h1>Plateforme de simulations et vidéos interactives</h1>
+  <p>
+    Concepts d’énergie en physique – 1ʳᵉ Bac Sciences Expérimentales
+    & Sciences Mathématiques
+  </p>
+</div>
 
+<!-- NAV -->
 <nav>
-<a href="energie-cinetique.html">Énergie cinétique</a>
-<a href="#">Énergie mécanique</a>
-<a href="#">Énergie thermique</a>
-<a href="#">Énergie interne</a>
+  <a href="index.html">Accueil</a>
+  <a href="energie-cinetique.html">Énergie cinétique</a>
+  <a href="energie-mecanique.html">Énergie mécanique</a>
+  <a href="energie-thermique.html">Énergie thermique</a>
+  <a href="energie-interne.html">Énergie interne</a>
 </nav>
 
+<!-- MAIN CONTENT -->
+<main>
+
 <section>
-<h2>Objectif de la plateforme</h2>
+<h2>Présentation de la plateforme</h2>
 <p>
-Cette plateforme aide les élèves à comprendre le concept d’énergie
-à travers des cours, des simulations interactives et des exercices,
-conformément au programme marocain.
+Cette plateforme pédagogique propose des <b>simulations</b> et des
+<b>vidéos interactives</b> destinées à l’enseignement et à l’apprentissage
+des concepts d’énergie en physique.
 </p>
+
+<div class="box">
+La plateforme ne vise pas à remplacer les cours ou les exercices,
+mais à offrir des outils de visualisation et d’observation permettant
+de mieux comprendre les phénomènes énergétiques étudiés en classe.
+</div>
 </section>
+
+<section>
+<h2>Public cible</h2>
+<ul>
+<li>Enseignants de physique-chimie (1ʳᵉ Bac)</li>
+<li>Élèves de sciences expérimentales et sciences mathématiques</li>
+</ul>
+</section>
+
+<section>
+<h2>Chapitres abordés</h2>
+
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1509223197845-458d87318791" alt="">
+<h3>Énergie cinétique</h3>
+<p>Observer l’effet de la vitesse et de la masse sur l’énergie.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1581091870627-3c5a1b8e2c68" alt="">
+<h3>Énergie mécanique</h3>
+<p>Analyser les transformations et la conservation de l’énergie.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1606206873764-fd15a7a4a1f4" alt="">
+<h3>Énergie thermique</h3>
+<p>Relier température, agitation microscopique et transferts.</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt="">
+<h3>Énergie interne</h3>
+<p>Comprendre les effets du travail et des interactions microscopiques.</p>
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>Comment utiliser la plateforme ?</h2>
+
+<h3>Pour l’enseignant</h3>
+<ul>
+<li>Illustrer un phénomène pendant le cours</li>
+<li>Susciter l’observation et la discussion</li>
+<li>Accompagner l’explication conceptuelle</li>
+</ul>
+
+<h3>Pour l’élève</h3>
+<ul>
+<li>Observer et manipuler les simulations</li>
+<li>Comparer différentes situations</li>
+<li>Relier les observations aux notions vues en classe</li>
+</ul>
+</section>
+
+</main>
+
+<footer>
+<p>Plateforme pédagogique – Didactique du concept d’énergie</p>
+</footer>
 
 </body>
 </html>

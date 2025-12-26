@@ -1,183 +1,235 @@
-<section id="arc">
-<h2>Déformation d’un objet élastique : arc et flèche</h2>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Travail et énergie interne</title>
 
-<p>
-Le travail exercé par l’archer sur la corde provoque la déformation de l’arc.
-Cette déformation modifie les interactions microscopiques entre les particules
-de l’arc et entraîne un stockage d’énergie interne (énergie élastique).
-</p>
-
-<div class="sim">
-
-<canvas id="arcSim" width="640" height="300"></canvas>
-
-<label>
-Tension de la corde (travail fourni)
-<input type="range" id="pull" min="0" max="100" value="0">
-</label>
-
-<p>
-Énergie interne stockée :
-<b><span id="Earc">0</span> J</b>
-</p>
-
-<button id="shootBtn">▶ Tirer</button>
-<button id="pauseBtn">⏸ Pause</button>
-<button id="resetBtn">🔁 Recommencer</button>
-
-</div>
-
-<script>
-const canvas = document.getElementById("arcSim");
-const ctx = canvas.getContext("2d");
-
-let state = "idle"; // idle | flying | paused
-let arrowX = 300;
-let speed = 0;
-let energy = 0;
-let animId = null;
-
-// === DESSIN DE L'ARCHER (À GAUCHE) ===
-function drawArcher(armBack){
-  // tête
-  ctx.beginPath();
-  ctx.arc(100,70,15,0,Math.PI*2);
-  ctx.stroke();
-
-  // corps
-  ctx.beginPath();
-  ctx.moveTo(100,85);
-  ctx.lineTo(100,150);
-  ctx.stroke();
-
-  // jambes
-  ctx.beginPath();
-  ctx.moveTo(100,150);
-  ctx.lineTo(80,210);
-  ctx.lineTo(120,210);
-  ctx.stroke();
-
-  // bras avant (tenant l’arc)
-  ctx.beginPath();
-  ctx.moveTo(100,100);
-  ctx.lineTo(160,120);
-  ctx.stroke();
-
-  // bras arrière (tirant la corde)
-  ctx.beginPath();
-  ctx.moveTo(100,100);
-  ctx.lineTo(160-armBack,120);
-  ctx.stroke();
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f8;
+  line-height:1.6;
 }
-
-// === DESSIN GLOBAL ===
-function draw(bend){
-  ctx.clearRect(0,0,640,300);
-
-  // ARCHER
-  drawArcher(bend*0.3);
-
-  // ARC (au centre)
-  ctx.beginPath();
-  ctx.moveTo(260,40);
-  ctx.quadraticCurveTo(260-bend,150,260,260);
-  ctx.strokeStyle="brown";
-  ctx.lineWidth=5;
-  ctx.stroke();
-
-  // CORDE
-  ctx.beginPath();
-  ctx.moveTo(260,40);
-  ctx.lineTo(260+bend,150);
-  ctx.lineTo(260,260);
-  ctx.strokeStyle="black";
-  ctx.lineWidth=2;
-  ctx.stroke();
-
-  // FLÈCHE (à droite)
-  ctx.fillStyle="black";
-  ctx.fillRect(arrowX,145,80,6);
-  ctx.beginPath();
-  ctx.moveTo(arrowX+80,145);
-  ctx.lineTo(arrowX+95,148);
-  ctx.lineTo(arrowX+80,151);
-  ctx.fill();
-
-  // BARRE ÉNERGIE
-  ctx.fillStyle="#ddd";
-  ctx.fillRect(430,260,160,15);
-  ctx.fillStyle="#ff9800";
-  ctx.fillRect(430,260,Math.min(energy,160),15);
-  ctx.strokeRect(430,260,160,15);
-  ctx.fillStyle="black";
-  ctx.fillText("Énergie interne (arc)",430,255);
+header{
+  background:#003366;
+  color:#fff;
+  padding:25px;
+  text-align:center;
 }
-
-// === ÉTAT AU REPOS ===
-function updateIdle(){
-  const p = pull.value;
-  const bend = p * 0.7;
-  energy = 0.02 * p * p;
-  document.getElementById("Earc").innerText = energy.toFixed(1);
-  arrowX = 260 + bend + 60;
-  draw(bend);
+.container{
+  display:flex;
 }
-
-pull.addEventListener("input", ()=>{
-  if(state === "idle") updateIdle();
-});
-
-// === TIR ===
-document.getElementById("shootBtn").onclick = ()=>{
-  if(state !== "idle") return;
-  state = "flying";
-  speed = pull.value / 4;
-  animate();
-};
-
-// === PAUSE ===
-document.getElementById("pauseBtn").onclick = ()=>{
-  if(state === "flying"){
-    state = "paused";
-  } else if(state === "paused"){
-    state = "flying";
-    animate();
-  }
-};
-
-// === RESET ===
-document.getElementById("resetBtn").onclick = ()=>{
-  cancelAnimationFrame(animId);
-  state = "idle";
-  pull.value = 0;
-  energy = 0;
-  document.getElementById("Earc").innerText = "0";
-  arrowX = 300;
-  updateIdle();
-};
-
-// === ANIMATION ===
-function animate(){
-  if(state !== "flying") return;
-
-  arrowX += speed;
-  draw(0);
-
-  if(arrowX < 640){
-    animId = requestAnimationFrame(animate);
-  } else {
-    state = "idle";
-  }
+aside{
+  width:280px;
+  background:#e8eef5;
+  padding:20px;
 }
+aside h3{
+  color:#003366;
+}
+aside a{
+  display:block;
+  margin:10px 0;
+  color:#003366;
+  font-weight:bold;
+  text-decoration:none;
+}
+main{
+  flex:1;
+  background:#fff;
+  padding:30px;
+}
+section{
+  margin-bottom:60px;
+}
+h2{
+  color:#003366;
+}
+h3{
+  color:#005599;
+}
+.box{
+  background:#eef3f8;
+  padding:20px;
+  border-left:4px solid #003366;
+  margin-top:15px;
+}
+.sim{
+  background:#fafafa;
+  border:1px dashed #aaa;
+  padding:20px;
+  margin-top:15px;
+}
+footer{
+  background:#003366;
+  color:#fff;
+  text-align:center;
+  padding:12px;
+}
+</style>
+</head>
 
-// INITIALISATION
-updateIdle();
-</script>
+<body>
+
+<header>
+<h1>Travail et énergie interne</h1>
+<p>1ʳᵉ Bac – Sciences expérimentales & Sciences mathématiques</p>
+</header>
+
+<div class="container">
+
+<!-- MENU LATÉRAL -->
+<aside>
+<h3>Sommaire</h3>
+
+<a href="#I">I – Effets du travail d’une force</a>
+
+<a href="#II">II – Énergie interne d’un système</a>
+<a href="#II1">2.1 Définition</a>
+<a href="#II2">2.2 Énergies cinétiques microscopiques</a>
+<a href="#II3">2.3 Énergies potentielles microscopiques</a>
+
+<a href="#III">III – Échange d’énergie</a>
+<a href="#III1">3.1 Échange d’énergie</a>
+<a href="#III2">3.2 Variation de l’énergie</a>
+
+<a href="#IV">IV – Premier principe</a>
+<a href="#IV1">4.1 Énoncé</a>
+<a href="#IV2">4.2 Conséquences</a>
+</aside>
+
+<!-- CONTENU PRINCIPAL -->
+<main>
+
+<section id="I">
+<h2>I – Effets du travail d’une force</h2>
 
 <div class="box">
-L’archer fournit un travail mécanique en tirant la corde vers lui.
-Ce travail est stocké dans l’arc sous forme d’énergie interne élastique,
-puis transféré à la flèche sous forme d’énergie cinétique.
+Objectif : observer comment le travail mécanique modifie l’état d’un système.
 </div>
 
+<div class="sim">
+📌 Simulation interactive :  
+Déformation d’un objet élastique / frottement / changement d’état
+</div>
+
+<div class="sim">
+🎥 Vidéo interactive :  
+Effets observables du travail d’une force
+</div>
 </section>
+
+<section id="II">
+<h2>II – Énergie interne d’un système</h2>
+</section>
+
+<section id="II1">
+<h3>2.1 Définition</h3>
+
+<div class="box">
+Objectif : comprendre ce que représente l’énergie interne à partir de l’observation.
+</div>
+
+<div class="sim">
+🎥 Vidéo : vision microscopique de la matière
+</div>
+</section>
+
+<section id="II2">
+<h3>2.2 Énergies cinétiques microscopiques</h3>
+
+<div class="box">
+Objectif : relier agitation microscopique et énergie interne.
+</div>
+
+<div class="sim">
+🔁 Simulation : augmentation de l’agitation des particules
+</div>
+
+<div class="sim">
+🎥 Vidéo : température et mouvement microscopique
+</div>
+</section>
+
+<section id="II3">
+<h3>2.3 Énergies potentielles microscopiques</h3>
+
+<div class="box">
+Objectif : comprendre le rôle des interactions entre particules.
+</div>
+
+<div class="sim">
+🔁 Simulation : interactions microscopiques (rapprochement / éloignement)
+</div>
+
+<div class="sim">
+🎥 Vidéo : interactions et états de la matière
+</div>
+</section>
+
+<section id="III">
+<h2>III – Échange d’énergie au cours d’une transformation</h2>
+</section>
+
+<section id="III1">
+<h3>3.1 Échange d’énergie</h3>
+
+<div class="box">
+Objectif : identifier les modes d’échange d’énergie entre systèmes.
+</div>
+
+<div class="sim">
+🔁 Simulation : travail reçu / énergie échangée
+</div>
+</section>
+
+<section id="III2">
+<h3>3.2 Variation de l’énergie d’un système</h3>
+
+<div class="box">
+Objectif : observer quand et pourquoi l’énergie interne varie.
+</div>
+
+<div class="sim">
+🎥 Vidéo : évolution énergétique d’un système
+</div>
+</section>
+
+<section id="IV">
+<h2>IV – Premier principe de la thermodynamique</h2>
+</section>
+
+<section id="IV1">
+<h3>4.1 Énoncé</h3>
+
+<div class="box">
+Objectif : donner du sens physique au premier principe.
+</div>
+
+<div class="sim">
+🎥 Vidéo animée : interprétation énergétique du premier principe
+</div>
+</section>
+
+<section id="IV2">
+<h3>4.2 Conséquences</h3>
+
+<div class="box">
+Objectif : comprendre les implications énergétiques des transformations.
+</div>
+
+<div class="sim">
+🔁 Simulation : bilan énergétique simple
+</div>
+</section>
+
+</main>
+</div>
+
+<footer>
+<p>Plateforme pédagogique – Simulations et vidéos interactives – Énergie</p>
+</footer>
+
+</body>
+</html>

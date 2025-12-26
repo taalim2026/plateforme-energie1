@@ -17,31 +17,14 @@ header{
   padding:25px;
   text-align:center;
 }
-.container{
-  display:flex;
-}
-aside{
-  width:280px;
-  background:#e8eef5;
-  padding:20px;
-}
-aside h3{
-  color:#003366;
-}
-aside a{
-  display:block;
-  margin:10px 0;
-  color:#003366;
-  font-weight:bold;
-  text-decoration:none;
-}
 main{
-  flex:1;
+  max-width:1000px;
+  margin:auto;
   background:#fff;
-  padding:30px;
+  padding:40px;
 }
 section{
-  margin-bottom:60px;
+  margin-bottom:50px;
 }
 h2{
   color:#003366;
@@ -55,17 +38,12 @@ h3{
   border-left:4px solid #003366;
   margin-top:15px;
 }
-.sim{
-  background:#fafafa;
-  border:1px dashed #aaa;
-  padding:20px;
-  margin-top:15px;
-}
 footer{
   background:#003366;
   color:#fff;
   text-align:center;
   padding:12px;
+  margin-top:40px;
 }
 </style>
 </head>
@@ -77,158 +55,98 @@ footer{
 <p>1ʳᵉ Bac – Sciences expérimentales & Sciences mathématiques</p>
 </header>
 
-<div class="container">
-
-<!-- MENU LATÉRAL -->
-<aside>
-<h3>Sommaire</h3>
-
-<a href="#I">I – Effets du travail d’une force</a>
-
-<a href="#II">II – Énergie interne d’un système</a>
-<a href="#II1">2.1 Définition</a>
-<a href="#II2">2.2 Énergies cinétiques microscopiques</a>
-<a href="#II3">2.3 Énergies potentielles microscopiques</a>
-
-<a href="#III">III – Échange d’énergie</a>
-<a href="#III1">3.1 Échange d’énergie</a>
-<a href="#III2">3.2 Variation de l’énergie</a>
-
-<a href="#IV">IV – Premier principe</a>
-<a href="#IV1">4.1 Énoncé</a>
-<a href="#IV2">4.2 Conséquences</a>
-</aside>
-
-<!-- CONTENU PRINCIPAL -->
 <main>
 
-<section id="I">
+<section>
 <h2>I – Effets du travail d’une force</h2>
 
 <div class="box">
-Objectif : observer comment le travail mécanique modifie l’état d’un système.
-</div>
-
-<div class="sim">
-📌 Simulation interactive :  
-Déformation d’un objet élastique / frottement / changement d’état
-</div>
-
-<div class="sim">
-🎥 Vidéo interactive :  
-Effets observables du travail d’une force
+Cette partie vise à mettre en évidence que le travail d’une force peut
+modifier l’état d’un système. Ces modifications peuvent se traduire
+par une déformation, une élévation de température ou un changement
+d’état physique.
 </div>
 </section>
 
-<section id="II">
+<section>
 <h2>II – Énergie interne d’un système</h2>
-</section>
 
-<section id="II1">
+<section>
 <h3>2.1 Définition</h3>
-
 <div class="box">
-Objectif : comprendre ce que représente l’énergie interne à partir de l’observation.
-</div>
-
-<div class="sim">
-🎥 Vidéo : vision microscopique de la matière
+L’énergie interne d’un système correspond à l’ensemble des énergies
+microscopiques liées au mouvement et aux interactions des particules
+qui constituent ce système.
 </div>
 </section>
 
-<section id="II2">
+<section>
 <h3>2.2 Énergies cinétiques microscopiques</h3>
-
 <div class="box">
-Objectif : relier agitation microscopique et énergie interne.
-</div>
-
-<div class="sim">
-🔁 Simulation : augmentation de l’agitation des particules
-</div>
-
-<div class="sim">
-🎥 Vidéo : température et mouvement microscopique
+Cette partie met l’accent sur le lien entre l’agitation microscopique
+des particules et l’énergie interne, notamment à travers la notion
+de température.
 </div>
 </section>
 
-<section id="II3">
+<section>
 <h3>2.3 Énergies potentielles microscopiques</h3>
-
 <div class="box">
-Objectif : comprendre le rôle des interactions entre particules.
-</div>
-
-<div class="sim">
-🔁 Simulation : interactions microscopiques (rapprochement / éloignement)
-</div>
-
-<div class="sim">
-🎥 Vidéo : interactions et états de la matière
+Cette sous-partie concerne l’énergie associée aux interactions
+microscopiques entre les particules, en lien avec l’état physique
+du système.
 </div>
 </section>
 
-<section id="III">
+</section>
+
+<section>
 <h2>III – Échange d’énergie au cours d’une transformation</h2>
-</section>
 
-<section id="III1">
+<section>
 <h3>3.1 Échange d’énergie</h3>
-
 <div class="box">
-Objectif : identifier les modes d’échange d’énergie entre systèmes.
-</div>
-
-<div class="sim">
-🔁 Simulation : travail reçu / énergie échangée
+Cette partie vise à identifier les différents modes d’échange d’énergie
+entre un système et son environnement lors d’une transformation.
 </div>
 </section>
 
-<section id="III2">
+<section>
 <h3>3.2 Variation de l’énergie d’un système</h3>
-
 <div class="box">
-Objectif : observer quand et pourquoi l’énergie interne varie.
-</div>
-
-<div class="sim">
-🎥 Vidéo : évolution énergétique d’un système
+On s’intéresse ici à l’évolution de l’énergie interne d’un système
+lorsqu’il reçoit ou cède de l’énergie.
 </div>
 </section>
 
-<section id="IV">
+</section>
+
+<section>
 <h2>IV – Premier principe de la thermodynamique</h2>
-</section>
 
-<section id="IV1">
+<section>
 <h3>4.1 Énoncé</h3>
-
 <div class="box">
-Objectif : donner du sens physique au premier principe.
-</div>
-
-<div class="sim">
-🎥 Vidéo animée : interprétation énergétique du premier principe
+Cette sous-partie est consacrée à la signification physique du premier
+principe de la thermodynamique, interprété comme un principe de
+conservation de l’énergie.
 </div>
 </section>
 
-<section id="IV2">
+<section>
 <h3>4.2 Conséquences</h3>
-
 <div class="box">
-Objectif : comprendre les implications énergétiques des transformations.
+Les conséquences du premier principe sont abordées à travers l’analyse
+qualitative des transformations énergétiques des systèmes.
 </div>
+</section>
 
-<div class="sim">
-🔁 Simulation : bilan énergétique simple
-</div>
 </section>
 
 </main>
-</div>
 
 <footer>
-<p>Plateforme pédagogique – Simulations et vidéos interactives – Énergie</p>
+<p>Plateforme pédagogique – Concepts d’énergie</p>
 </footer>
 
 </body>
